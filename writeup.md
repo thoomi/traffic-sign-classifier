@@ -3,9 +3,6 @@
 This is the second project I am doing as part of Udacity's Self-Driving-Car Nanodegree. After learning the theoretical concepts of *neural networks* and *deep learning* I started exploring [TensorFlow](https://www.tensorflow.org/). Following that path I used the newly gained knowledge to build up a *deep neural network* in order to recognize 43 different German traffic signs. Utilizing different preprocessing and data augmentation techniques my final model got an accuracy of **98.6%** on the validation set and an accuracy of **96.0%** on the test set. See below for more detail :)
 
 
----
-
-
 **The goals / steps of this project are the following:**
 * Load the data set (see below for links to the project data set)
 * Explore, summarize and visualize the data set
@@ -24,17 +21,20 @@ This is the second project I am doing as part of Udacity's Self-Driving-Car Nano
 [image5]: ./images/normalized.png "Center normalize"
 [image6]: ./images/transform1.png "Transformation 1"
 [image7]: ./images/transform2.png "Transformation 2"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[image8]: ./images/model_scheme.png "Model scheme"
 
 
-## Rubric Points
-Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
-
----
-
+# Report
 ### Writeup & Project Files
 
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb).
+#### 1. Writeup
+You're reading it! Following below I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.
+
+
+#### 2. Project Files
+
+You can find all project files in this [Github Repository](https://github.com/thoomi/traffic-sign-classifier) and if you're looking specifically for the projects code, [here is a link to the implementation](https://github.com/thoomi/traffic-sign-classifier/blob/master/Traffic_Sign_Classifier.ipynb) in a IPython notebook.
+
 
 ---
 
@@ -111,49 +111,116 @@ In summation, this leads to a new training set size of **173995** and the parame
 
 The code for my final model is located in the sixth cell of the IPython notebook.
 
-My final model consisted of the following layers:
+My final model consisted of the following layers and is highly inspired by the Sermanet & LeCun model:
+
+![Transformation examples][image8]
+
+And here is a table with a little bit more detail:
 
 | Layer         		|     Description	        					|
 |:---------------------:|:---------------------------------------------:|
 | Input         		| 32x32x1 Grayscale image   					|
-| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x64 	|
+| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x16 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+| Max pooling	      	| 2x2 stride,  outputs 14x14x16 				|
+| Convolution 5x5	    | 1x1 stride, valid padding, outputs 10x10x32   |
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 5x5x32 				    |
+| Convolution 5x5	    | 1x1 stride, valid padding, outputs 1x1x512    |
+| RELU					|		 										|
+| Fully connected		| flattend, combined L1 + L1 + L3		 	    |
+| RELU					|		 										|
+| Droput				| Keep probability: 0.5		 			    	|
+| Fully connected  		| Outputs 43									|
+| Softmax       		|              									|
 
 
 #### 4. Model Training
 
-The code for training the model is located in the eigth cell of the ipython notebook.
+The code for training the model is located in the seventh cell of the IPython notebook.
 
-To train the model, I used an ....
+To train the model, i used the **Adam optimizer** and the following hyperparameters:
+
+* Learning rate: **0.001**
+* Batch size: **100**
+* Epochs: **50**
+* Weight initialization with truncated normal distribution with **mu = 0** and **sigma = 0.1**
+
 
 #### 5. Solution Design
 
-Describe the approach taken for finding a solution. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+The code for calculating the accuracy of the model is located in the seventh cell of the Ipython notebook.
 
-The code for calculating the accuracy of the model is located in the ninth cell of the Ipython notebook.
+I started of with a standard LeNet5 architecture and tried to tune the hyperparameters from there. First with only grayscaling the images and after that I tried various input normalization techniques which gave me a about 1% higher accuracy. The further equalization of the images histogram, to decouple the model from brightness effects, added another 1-2 % accuracy on the validation set.  
+
+After playing a lot with the hyperparameters and not getting results above 95% I decided to increase the convolution layer sizes and to connect the convolution outputs of each layer to a big fully connected layer. Finally i got results above 97 %. To prevent the model from over fitting because of this big last layer, I added a dropout layer with a keep probability of 50 %.
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ?
-* test set accuracy of ?
+* Validation set accuracy of **98.6%**
+* Test set accuracy of **96.0%**
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to over fitting or under fitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+I kept track of the process in order to help me finding good parameters and not
+trying everything twice. Here is the log book of my progress torwards the final model:
+
+
+16.02.2017  
+
+    Standard LeNet5 (C6 - C16 - FC120 - FC84 - SM43)
+    Epochs: 30 | Batchsize: 150 | LearningRate: 0.001 | Initialization: truncated_normal
+    Normalization: no
+    Preprocessing: no
+    Validation Accuracy: 0.892
+
+16.02.2017
+
+    Standard LeNet5 (C6 - C16 - FC120 - FC84 - SM43)
+    Epochs: 30 | Batchsize: 150 | LearningRate: 0.001 | Initialization: truncated_normal
+    Normalization: (X_train / 255.0) - 0.5
+    Preprocessing: no
+    Validation Accuracy: 0.921
+
+17.02.2017
+
+    Standard LeNet5 (C32 - C64 - FC120 - FC84 - SM43)
+    Epochs: 30 | Batchsize: 200 | LearningRate: 0.001 | Initialization: truncated_normal
+    Normalization: (X_train / 255.0) - 0.5
+    Preprocessing: grayscale
+    Validation Accuracy: 0.931
+
+18.02.2017
+
+    Standard LeNet5 (C32 - C64 - FC256 - FC84 - SM43)
+    Epochs: 30 | Batchsize: 200 | LearningRate: 0.001 | Initialization: truncated_normal
+    Normalization: subtract mean, divide by std deviation
+    Preprocessing: grayscale, equalized Histogram
+    Validation Accuracy: 0.957
+
+
+20.02.2017
+
+    Standard LeNet5 (C32 - C64 - FC256 - FC84 - SM43)
+    Epochs: 30 | Batchsize: 200 | LearningRate: 0.001 | Initialization: truncated_normal
+    Normalization: subtract mean, divide by std deviation
+    Preprocessing: grayscale, equalized Histogram, 4 x additional data (rotated, translated)
+    Validation Accuracy: 0.969
+
+
+22.02.2017
+
+    Standard LeNet5 (C32 - C64 - FC512 - FC84 - SM43)
+    Epochs: 30 | Batchsize: 100 | LearningRate: 0.001 | Initialization: truncated_normal
+    Normalization: subtract mean, divide by std deviation
+    Preprocessing: grayscale, equalized Histogram, 4 x additional data (rotated, translated)
+    Validation Accuracy: 0.973
+
+22.02.2017
+
+    Advanced LeNet5 (C16 - C32 - FC512 - SM43) [connecting both convolution outputs to the FC512]
+    Epochs: 30 | Batchsize: 100 | LearningRate: 0.001 | Initialization: truncated_normal
+    Normalization: subtract mean, divide by std deviation
+    Preprocessing: grayscale, equalized Histogram, 4 x additional data (rotated, translated)
+    Validation Accuracy: 0.986
 
 ---
 
@@ -196,6 +263,8 @@ Here are the results of the prediction:
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
 
 #### 3. Model Certainty - Softmax Probabilities
+
+The top five softmax probabilities of the predictions on the captured images are outputted. The submission discusses how certain or uncertain the model is of its predictions.
 
 Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction and identify where in your code softmax probabilities were outputted. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 

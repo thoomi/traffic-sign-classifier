@@ -9,4 +9,4 @@ This is the second project I am doing as part of Udacity's Self-Driving-Car Nano
 
 ### Results
 
-For a more detailed insight on the project please see the full [Writeup / Report]().
+For a more detailed insight on the project please see the full [Writeup / Report](https://github.com/thoomi/traffic-sign-classifier/blob/master/writeup.md).
