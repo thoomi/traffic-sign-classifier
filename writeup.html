@@ -507,22 +507,22 @@ pre.editor-colors .fold-marker:after,
 </style>
   </head>
   <body class='markdown-preview' data-use-github-style><h1 id="-traffic-sign-recognition-"><strong>Traffic Sign Recognition</strong></h1>
-<p>This is the second project I am doing as part of Udacity&#39;s Self-Driving-Car Nanodegree. After learning the theoretical concepts of <em>neural networks</em> and <em>deep learning</em>, I started exploring <a href="https://www.tensorflow.org/">TensorFlow</a>. Following that path, I used the newly gained knowledge to build up a <em>deep neural network</em> in order to recognize 43 different German traffic signs. Utilizing different preprocessing and data augmentation techniques my final model got an accuracy of <strong>98.7%</strong> on the validation set and an accuracy of <strong>96.0%</strong> on the test set. See below for more details :)</p>
-<p><strong>The goals / steps of this project are the following:</strong></p>
+<p>This is the second project I am doing as part of Udacity&#39;s Self-Driving-Car Nanodegree. After learning the theoretical concepts of <em>neural networks</em> and <em>deep learning</em>, I started exploring <a href="https://www.tensorflow.org/">TensorFlow</a>. Following that path, I used this newly gained knowledge to build up a <em>deep neural network</em> in order to recognize 43 different German traffic signs. Utilizing different preprocessing and data augmentation techniques, my final model got an accuracy of <strong>98.7%</strong> on the validation set and an accuracy of <strong>96.0%</strong> on the test set. See below for more details :)</p>
+<p><strong>The goals/steps of this project are the following:</strong></p>
 <ul>
-<li>Load the data set (see below for links to the project data set)</li>
-<li>Explore, summarize and visualize the data set</li>
-<li>Design, train and test a model architecture</li>
-<li>Use the model to make predictions on new images</li>
-<li>Analyze the softmax probabilities of the new images</li>
-<li>Summarize the results with a written report</li>
+<li>Loading the data set (see below for links to the project data set)</li>
+<li>Exploring, summarizing and visualize the data set</li>
+<li>Designing, training and testing a model architecture</li>
+<li>Using the model to make predictions on new images</li>
+<li>Analyzing the softmax probabilities of the new images</li>
+<li>Summarizing the results with a written report</li>
 </ul>
 <h1 id="report">Report</h1>
 <h3 id="writeup-project-files">Writeup &amp; Project Files</h3>
 <h4 id="1-writeup">1. Writeup</h4>
-<p>You&#39;re reading it! Following below I will consider the <a href="https://review.udacity.com/#!/rubrics/481/view">rubric points</a> individually and describe how I addressed each point in my implementation.</p>
+<p>You&#39;re reading it! I will examine below the <a href="https://review.udacity.com/#!/rubrics/481/view">rubric points</a> individually and describe how I addressed each point in my implementation.</p>
 <h4 id="2-project-files">2. Project Files</h4>
-<p>You can find all project files in this <a href="https://github.com/thoomi/traffic-sign-classifier">Github Repository</a>. If you&#39;re looking specifically for the projects code, <a href="https://github.com/thoomi/traffic-sign-classifier/blob/master/Traffic_Sign_Classifier.ipynb">here is a link to the implementation</a> as IPython notebook.</p>
+<p>You can find all project files in this <a href="https://github.com/thoomi/traffic-sign-classifier">Github Repository</a>. If you&#39;re looking specifically for the project&#39;s code, <a href="https://github.com/thoomi/traffic-sign-classifier/blob/master/Traffic_Sign_Classifier.ipynb">here is a link to the implementation</a> as IPython notebook.</p>
 <hr>
 <h3 id="data-set-summary-exploration">Data Set Summary &amp; Exploration</h3>
 <h4 id="1-basic-dataset-summary">1. Basic Dataset Summary</h4>
@@ -533,14 +533,14 @@ sign data set</a>:</p>
 <li>Size of the training set: <strong>34799</strong></li>
 <li>Size of the validation set: <strong>4410</strong></li>
 <li>Size of the test set: <strong>12630</strong></li>
-<li>Shape of a traffic sign image: <strong>(32, 32, 3)</strong></li>
+<li>Shape of the traffic sign images: <strong>(32, 32, 3)</strong></li>
 <li>Number of unique classes/labels:  <strong>43</strong></li>
 <li>Mean of the training set: <strong>82.677</strong></li>
 <li>Standard deviation of the training set: <strong>67.850</strong></li>
 </ul>
 <h4 id="2-exploratory-dataset-visualization">2. Exploratory Dataset Visualization</h4>
 <p>The code for this step is contained in the third code cell of the IPython notebook.  </p>
-<p>Here is a bar chat visualizing the number of examples for each class. Some classes are obviously very underrepresented. In order to help the model to generalize on those classes one needs to increase their number of examples (exp. through data augmentation).</p>
+<p>The following chart visualizes the number of examples for each class. Some classes are obviously very underrepresented. In order to help the model generalize these classes, one needs to increase their number of examples (ex. through data augmentation).</p>
 <p><img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/images/chart_count_classes.png" alt="Bar chart showing count of individual classes" title="Bar chart"></p>
 <p>Below is a visualization of one example for each individual class. As we can see, the pictures have very different brightness values and possibly need to be normalized.</p>
 <p><img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/images/random_examples.png" alt="Random pick of traffic sign images" title="Random examples"></p>
@@ -548,16 +548,16 @@ sign data set</a>:</p>
 <h3 id="design-and-test-a-model-architecture">Design and Test a Model Architecture</h3>
 <h4 id="1-preprocessing">1. Preprocessing</h4>
 <p>The code for this step is contained in the fourth &amp; seventh code cell of the IPython notebook.</p>
-<p>As a first step, I decided to convert the images to grayscale. As Sermanet &amp; LeCun show in their <a href="http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf">paper</a>, the color makes almost no difference on the models accuracy because of the similar colors and shapes between the traffic signs. A positive side effect of this is the reduced computation cost.</p>
+<p>As a first step, I decided to convert the images to grayscale. As Sermanet &amp; LeCun show in their <a href="http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf">paper</a>, the color makes almost no difference on the model&#39;s accuracy because of the similar colors and shapes between the traffic signs. A positive side effect of this is the reduced computation cost.</p>
 <p>Here is an example of a traffic sign image before and after grayscaling:</p>
 <p><img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/images/grayscale.png" alt="Color to grayscale" title="Grayscale"></p>
-<p>As a second step, the images histogram has been equalized in order to get a constant brightness level of all images. The example below shows the conversion from grayscale to an equalized histogram:</p>
+<p>As a second step, the image&#39;s histogram has been equalized in order to get a constant brightness level of all images. The example below shows the conversion from grayscale to an equalized histogram:</p>
 <p><img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/images/equalize_histogram.png" alt="Grayscale with equalized histogram" title="Equalize histogram"></p>
 <p>The last step normalizes the images by dividing by 255 and subtracting 0.5 as LeCun suggests in his paper about <a href="http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf">efficient backpropagation</a>. See below an example:</p>
 <p><img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/images/normalized.png" alt="Normalized image" title="Center normalize"></p>
 <h4 id="2-training-data-augmentation">2. Training Data Augmentation</h4>
-<p>The fifth code cell of the IPython notebook contains the code for augmenting the data set.</p>
-<p>I decided to generate additional data because some classes in the training data set are underrepresented. In order to help the network to generalize and correctly classify those classes I augmented the original data set by generating new images with small and random transformations (translate, rotate, shear). At different stages in the process of finding the right parameters, I tried various numbers and finally settled with a maximum of 2500 images for each class. This gives a good compromise between accuracy and training speed.</p>
+<p>The fifth code cell of the IPython notebook contains the code for augmenting the dataset.</p>
+<p>I decided to generate additional data because some classes in the training data set are underrepresented. In order to help the network to generalize and correctly classify those classes, I augmented the original data set by generating new images with small and random transformations (translate, rotate, shear). At different stages in the process of finding the right parameters, I tried various numbers and finally settled with a maximum of 2500 images for each class. This gives a good compromise between accuracy and training speed.</p>
 <p>Here are some examples of original images and their augmented counterparts:</p>
 <p><img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/images/transform1.png" alt="Transformation examples" title="Transformation 1">
 <img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/images/transform2.png" alt="Transformation examples" title="Transformation 2"></p>
@@ -620,14 +620,14 @@ sign data set</a>:</p>
 </tr>
 <tr>
 <td style="text-align:center">Fully connected</td>
-<td style="text-align:center">flattend, combined L1 + L1 + L3</td>
+<td style="text-align:center">flattened, combined L1 + L1 + L3</td>
 </tr>
 <tr>
 <td style="text-align:center">RELU</td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">Droput</td>
+<td style="text-align:center">Dropout</td>
 <td style="text-align:center">Keep probability: 0.5</td>
 </tr>
 <tr>
@@ -650,14 +650,14 @@ sign data set</a>:</p>
 </ul>
 <h4 id="5-solution-design">5. Solution Design</h4>
 <p>The code for calculating the accuracy of the model is located in the ninth cell of the IPython notebook.</p>
-<p>I started off with a standard <a href="http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf">LeNet5 architecture</a> and tried to tune the hyperparameters from there. First with only grayscaling the images and after that I tried various input normalization techniques which gave me a about 1% higher accuracy. The further equalization of the images histogram, in order to decouple the model from brightness effects, added another 1-2% accuracy on the validation set.  </p>
-<p>After testing the hyperparameters in different ways and not getting results above 95%, I decided to increase the convolution layer sizes and to connect each convolutions output to a big fully connected layer. Finally i got results above 97%. To prevent the model from overfitting caused by the big last layer, I added a <a href="https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf">dropout layer</a> with a keep probability of 50%.</p>
+<p>I started off with a standard <a href="http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf">LeNet5 architecture</a> and tried to tune the hyperparameters from there. First with only grayscaling the images and after that, I tried various input normalization techniques which gave me an about 1% higher accuracy. The further equalization of the image&#39;s histogram, in order to decouple the model from brightness effects, added another 1-2% accuracy on the validation set.  </p>
+<p>After testing the hyperparameters in different ways and not getting results above 95%, I decided to increase the convolution layer sizes and to connect each convolutions output to a big fully connected layer. Finally, I got results above 97%. To prevent the model from overfitting caused by the big last layer, I added a <a href="https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf">dropout layer</a> with a keep probability of 50%.</p>
 <p>My final model results:</p>
 <ul>
 <li>Validation set accuracy of <strong>98.7%</strong></li>
 <li>Test set accuracy of <strong>96.0%</strong></li>
 </ul>
-<p>I kept track of the process in order to help finding good parameters instead of trying everything twice. Here is the log book of my progress torwards the final model:</p>
+<p>I kept track of the process in order to help to find good parameters instead of trying everything twice. Here is the log book of my progress towards the final model:</p>
 <p>16.02.2017  </p>
 <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Standard&nbsp;LeNet5&nbsp;(C6&nbsp;-&nbsp;C16&nbsp;-&nbsp;FC120&nbsp;-&nbsp;FC84&nbsp;-&nbsp;SM43)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Epochs:&nbsp;30&nbsp;|&nbsp;Batchsize:&nbsp;150&nbsp;|&nbsp;LearningRate:&nbsp;0.001&nbsp;|&nbsp;Initialization:&nbsp;truncated_normal</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Normalization:&nbsp;no</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Preprocessing:&nbsp;no</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Validation&nbsp;Accuracy:&nbsp;0.892</span></span></span></div></pre><p>16.02.2017</p>
 <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Standard&nbsp;LeNet5&nbsp;(C6&nbsp;-&nbsp;C16&nbsp;-&nbsp;FC120&nbsp;-&nbsp;FC84&nbsp;-&nbsp;SM43)</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Epochs:&nbsp;30&nbsp;|&nbsp;Batchsize:&nbsp;150&nbsp;|&nbsp;LearningRate:&nbsp;0.001&nbsp;|&nbsp;Initialization:&nbsp;truncated_normal</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Normalization:&nbsp;(X_train&nbsp;/&nbsp;255.0)&nbsp;-&nbsp;0.5</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Preprocessing:&nbsp;no</span></span></span></div><div class="line"><span class="text plain"><span class="meta paragraph text"><span>Validation&nbsp;Accuracy:&nbsp;0.921</span></span></span></div></pre><p>17.02.2017</p>
@@ -677,7 +677,7 @@ sign data set</a>:</p>
 <ul>
 <li><p>The first image is a sign painted on the street. Therefore it has quite a perspective distortion and might be difficult to classify.</p>
 </li>
-<li><p>The second image is a different version of the German 30 km/h speed limit sign. I wanted to see, if the network is able to classify it correctly. I guess due to the additional characters on the sign this might be hard classify.</p>
+<li><p>The second image is a different version of the German 30 km/h speed limit sign. I wanted to see if the network is able to classify it correctly. I guess due to the additional characters on the sign this might be hard to classify.</p>
 </li>
 <li><p>The third image contains a yield sign partly overlapped by a tree. The overlap could influence the classification probability and the model might not be as certain.</p>
 </li>
@@ -690,15 +690,15 @@ sign data set</a>:</p>
 <p>The code for making predictions on my final model is located in the eleventh cell of the IPython notebook.</p>
 <h5 id="2-1-analysis-of-the-performance-on-new-images">2.1 Analysis of the Performance on New Images</h5>
 <p><img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/examples/prediction1.png" alt="Prediction 1" title="Prediction 1"></p>
-<p>The first image is actually a <em>Children crossing</em> sign but my trained model classified it as a <em>Wild animals crossing</em> sign. This is obviously a wrong prediction and in my opinion caused by the perspective distortion. Additionally it is surprising the model has a certainty of a 100% on the wrong sign. I guess this might be a indicator for an overfitted network.</p>
+<p>The first image is actually a <em>Children crossing</em> sign but my trained model classified it as <em>Wild animals crossing</em> sign. This is obviously a wrong prediction and in my opinion caused by the perspective distortion. Additionally, it is surprising the model has a certainty of a 100% on the wrong sign. I guess this might be an indicator for an overfitted network.</p>
 <p><img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/examples/prediction2.png" alt="Prediction 2" title="Prediction 2"></p>
-<p>Considering that this second sign belongs to a class on which the model was not explicitly trained, the false prediction is not a big surprise. But it is very similar to a standard <em>30 km/h limit</em> sign and I had some hope it could classify it correctly. As the bar chart indicates it got the general speed limit type right, but classified it as an <em>50 km/h limit</em> sign.</p>
+<p>Considering that this second sign belongs to a class on which the model was not explicitly trained, the false prediction is not a big surprise. But it is very similar to a standard <em>30 km/h limit</em> sign and I had some hope it could classify it correctly. As the bar chart indicates it got the general speed limit type right but classified it as a <em>50 km/h limit</em> sign.</p>
 <p><img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/examples/prediction3.png" alt="Prediction 3" title="Prediction 3"></p>
 <p>With this third example prediction, the model got it right. Although the traffic sign is partly overlapped by a tree, it got a certainty of a 100% on the correct class.</p>
 <p><img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/examples/prediction4.png" alt="Prediction 4" title="Prediction 4"></p>
 <p>The fourth image was also classified correctly. This wasn&#39;t a particularly hard image and as there is no perspective distortion and the sign is fully visible we got a certainty of a 96.96% on the correct class.</p>
 <p><img src="/home/thomi/workspace/SDC/CarND-Traffic-Sign-Classifier-Project/examples/prediction5.png" alt="Prediction 5" title="Prediction 5"></p>
-<p>This last example is a <em>120 km/h speed limit</em> display on a German Autobahn. The model thinks it is a <em>Stop</em> sign with a certainty of a 100%. The second prediction is the correct class, but the model does not even consider it with 1%. This might be caused by the yellow characters, as they appear very bright (white) in the preprocessed image. Additionally the inner background of the sign is dark and not white as usual.</p>
+<p>This last example is a <em>120 km/h speed limit</em> display on a German Autobahn. The model thinks it is a <em>Stop</em> sign with a certainty of a 100%. The second prediction is the correct class, but the model does not even consider it with 1%. This might be caused by the yellow characters, as they appear very bright (white) in the preprocessed image. Additionally, the inner background of the sign is dark and not white as usual.</p>
 <h5 id="2-2-summary-of-the-performance-on-new-images">2.2 Summary of the Performance on New Images</h5>
 <p>The model has its problems given very distorted images and might be overfitted in some way because it is predicting 100% certainty on wrong images. A good generalized model should distribute the probabilities more even. However given <em>good</em> example images with small distortions or small overlaps it performs very well.</p>
 <h5 id="2-3-accuracy-on-all-example-images">2.3 Accuracy on all example images</h5>

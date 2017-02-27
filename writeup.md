@@ -1,15 +1,15 @@
 # **Traffic Sign Recognition**
 
-This is the second project I am doing as part of Udacity's Self-Driving-Car Nanodegree. After learning the theoretical concepts of *neural networks* and *deep learning*, I started exploring [TensorFlow](https://www.tensorflow.org/). Following that path, I used the newly gained knowledge to build up a *deep neural network* in order to recognize 43 different German traffic signs. Utilizing different preprocessing and data augmentation techniques my final model got an accuracy of **98.7%** on the validation set and an accuracy of **96.0%** on the test set. See below for more details :)
+This is the second project I am doing as part of Udacity's Self-Driving-Car Nanodegree. After learning the theoretical concepts of *neural networks* and *deep learning*, I started exploring [TensorFlow](https://www.tensorflow.org/). Following that path, I used this newly gained knowledge to build up a *deep neural network* in order to recognize 43 different German traffic signs. Utilizing different preprocessing and data augmentation techniques, my final model got an accuracy of **98.7%** on the validation set and an accuracy of **96.0%** on the test set. See below for more details :)
 
 
-**The goals / steps of this project are the following:**
-* Load the data set (see below for links to the project data set)
-* Explore, summarize and visualize the data set
-* Design, train and test a model architecture
-* Use the model to make predictions on new images
-* Analyze the softmax probabilities of the new images
-* Summarize the results with a written report
+**The goals/steps of this project are the following:**
+* Loading the data set (see below for links to the project data set)
+* Exploring, summarizing and visualize the data set
+* Designing, training and testing a model architecture
+* Using the model to make predictions on new images
+* Analyzing the softmax probabilities of the new images
+* Summarizing the results with a written report
 
 
 [//]: # (Image References)
@@ -29,12 +29,12 @@ This is the second project I am doing as part of Udacity's Self-Driving-Car Nano
 ### Writeup & Project Files
 
 #### 1. Writeup
-You're reading it! Following below I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.
+You're reading it! I will examine below the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.
 
 
 #### 2. Project Files
 
-You can find all project files in this [Github Repository](https://github.com/thoomi/traffic-sign-classifier). If you're looking specifically for the projects code, [here is a link to the implementation](https://github.com/thoomi/traffic-sign-classifier/blob/master/Traffic_Sign_Classifier.ipynb) as IPython notebook.
+You can find all project files in this [Github Repository](https://github.com/thoomi/traffic-sign-classifier). If you're looking specifically for the project's code, [here is a link to the implementation](https://github.com/thoomi/traffic-sign-classifier/blob/master/Traffic_Sign_Classifier.ipynb) as IPython notebook.
 
 
 ---
@@ -51,7 +51,7 @@ sign data set](https://d17h27t6h515a5.cloudfront.net/topher/2017/February/5898cd
 * Size of the training set: **34799**
 * Size of the validation set: **4410**
 * Size of the test set: **12630**
-* Shape of a traffic sign image: **(32, 32, 3)**
+* Shape of the traffic sign images: **(32, 32, 3)**
 * Number of unique classes/labels:  **43**
 * Mean of the training set: **82.677**
 * Standard deviation of the training set: **67.850**
@@ -61,7 +61,7 @@ sign data set](https://d17h27t6h515a5.cloudfront.net/topher/2017/February/5898cd
 
 The code for this step is contained in the third code cell of the IPython notebook.  
 
-Here is a bar chat visualizing the number of examples for each class. Some classes are obviously very underrepresented. In order to help the model to generalize on those classes one needs to increase their number of examples (exp. through data augmentation).
+The following chart visualizes the number of examples for each class. Some classes are obviously very underrepresented. In order to help the model generalize these classes, one needs to increase their number of examples (ex. through data augmentation).
 
 ![Bar chart showing count of individual classes][image1]
 
@@ -77,13 +77,13 @@ Below is a visualization of one example for each individual class. As we can see
 
 The code for this step is contained in the fourth & seventh code cell of the IPython notebook.
 
-As a first step, I decided to convert the images to grayscale. As Sermanet & LeCun show in their [paper][paper02], the color makes almost no difference on the models accuracy because of the similar colors and shapes between the traffic signs. A positive side effect of this is the reduced computation cost.
+As a first step, I decided to convert the images to grayscale. As Sermanet & LeCun show in their [paper][paper02], the color makes almost no difference on the model's accuracy because of the similar colors and shapes between the traffic signs. A positive side effect of this is the reduced computation cost.
 
 Here is an example of a traffic sign image before and after grayscaling:
 
 ![Color to grayscale][image3]
 
-As a second step, the images histogram has been equalized in order to get a constant brightness level of all images. The example below shows the conversion from grayscale to an equalized histogram:
+As a second step, the image's histogram has been equalized in order to get a constant brightness level of all images. The example below shows the conversion from grayscale to an equalized histogram:
 
 ![Grayscale with equalized histogram][image4]
 
@@ -94,9 +94,9 @@ The last step normalizes the images by dividing by 255 and subtracting 0.5 as Le
 
 #### 2. Training Data Augmentation
 
-The fifth code cell of the IPython notebook contains the code for augmenting the data set.
+The fifth code cell of the IPython notebook contains the code for augmenting the dataset.
 
-I decided to generate additional data because some classes in the training data set are underrepresented. In order to help the network to generalize and correctly classify those classes I augmented the original data set by generating new images with small and random transformations (translate, rotate, shear). At different stages in the process of finding the right parameters, I tried various numbers and finally settled with a maximum of 2500 images for each class. This gives a good compromise between accuracy and training speed.
+I decided to generate additional data because some classes in the training data set are underrepresented. In order to help the network to generalize and correctly classify those classes, I augmented the original data set by generating new images with small and random transformations (translate, rotate, shear). At different stages in the process of finding the right parameters, I tried various numbers and finally settled with a maximum of 2500 images for each class. This gives a good compromise between accuracy and training speed.
 
 Here are some examples of original images and their augmented counterparts:
 
@@ -135,9 +135,9 @@ And here is a table with more detail:
 | Max pooling	      	| 2x2 stride,  outputs 5x5x32 				    |
 | Convolution 5x5	    | 1x1 stride, valid padding, outputs 1x1x512    |
 | RELU					|		 										|
-| Fully connected		| flattend, combined L1 + L1 + L3		 	    |
+| Fully connected		| flattened, combined L1 + L1 + L3		 	    |
 | RELU					|		 										|
-| Droput				| Keep probability: 0.5		 			    	|
+| Dropout				| Keep probability: 0.5		 			    	|
 | Fully connected  		| Outputs 43									|
 | Softmax       		|              									|
 
@@ -158,16 +158,16 @@ To train the model, I used the **Adam optimizer** and the following hyperparamet
 
 The code for calculating the accuracy of the model is located in the ninth cell of the IPython notebook.
 
-I started off with a standard [LeNet5 architecture][paper01] and tried to tune the hyperparameters from there. First with only grayscaling the images and after that I tried various input normalization techniques which gave me a about 1% higher accuracy. The further equalization of the images histogram, in order to decouple the model from brightness effects, added another 1-2% accuracy on the validation set.  
+I started off with a standard [LeNet5 architecture][paper01] and tried to tune the hyperparameters from there. First with only grayscaling the images and after that, I tried various input normalization techniques which gave me an about 1% higher accuracy. The further equalization of the image's histogram, in order to decouple the model from brightness effects, added another 1-2% accuracy on the validation set.  
 
-After testing the hyperparameters in different ways and not getting results above 95%, I decided to increase the convolution layer sizes and to connect each convolutions output to a big fully connected layer. Finally i got results above 97%. To prevent the model from overfitting caused by the big last layer, I added a [dropout layer][paper04] with a keep probability of 50%.
+After testing the hyperparameters in different ways and not getting results above 95%, I decided to increase the convolution layer sizes and to connect each convolutions output to a big fully connected layer. Finally, I got results above 97%. To prevent the model from overfitting caused by the big last layer, I added a [dropout layer][paper04] with a keep probability of 50%.
 
 My final model results:
 * Validation set accuracy of **98.7%**
 * Test set accuracy of **96.0%**
 
 
-I kept track of the process in order to help finding good parameters instead of trying everything twice. Here is the log book of my progress torwards the final model:
+I kept track of the process in order to help to find good parameters instead of trying everything twice. Here is the log book of my progress towards the final model:
 
 
 16.02.2017  
@@ -251,7 +251,7 @@ Here are five German traffic signs I found online while browsing through Google 
 
 * The first image is a sign painted on the street. Therefore it has quite a perspective distortion and might be difficult to classify.
 
-* The second image is a different version of the German 30 km/h speed limit sign. I wanted to see, if the network is able to classify it correctly. I guess due to the additional characters on the sign this might be hard classify.
+* The second image is a different version of the German 30 km/h speed limit sign. I wanted to see if the network is able to classify it correctly. I guess due to the additional characters on the sign this might be hard to classify.
 
 * The third image contains a yield sign partly overlapped by a tree. The overlap could influence the classification probability and the model might not be as certain.
 
@@ -275,12 +275,12 @@ The code for making predictions on my final model is located in the eleventh cel
 
 ![Prediction 1][prediction_image1]
 
-The first image is actually a *Children crossing* sign but my trained model classified it as a *Wild animals crossing* sign. This is obviously a wrong prediction and in my opinion caused by the perspective distortion. Additionally it is surprising the model has a certainty of a 100% on the wrong sign. I guess this might be a indicator for an overfitted network.
+The first image is actually a *Children crossing* sign but my trained model classified it as *Wild animals crossing* sign. This is obviously a wrong prediction and in my opinion caused by the perspective distortion. Additionally, it is surprising the model has a certainty of a 100% on the wrong sign. I guess this might be an indicator for an overfitted network.
 
 
 ![Prediction 2][prediction_image2]
 
-Considering that this second sign belongs to a class on which the model was not explicitly trained, the false prediction is not a big surprise. But it is very similar to a standard *30 km/h limit* sign and I had some hope it could classify it correctly. As the bar chart indicates it got the general speed limit type right, but classified it as an *50 km/h limit* sign.
+Considering that this second sign belongs to a class on which the model was not explicitly trained, the false prediction is not a big surprise. But it is very similar to a standard *30 km/h limit* sign and I had some hope it could classify it correctly. As the bar chart indicates it got the general speed limit type right but classified it as a *50 km/h limit* sign.
 
 ![Prediction 3][prediction_image3]
 
@@ -292,7 +292,7 @@ The fourth image was also classified correctly. This wasn't a particularly hard 
 
 ![Prediction 5][prediction_image5]
 
-This last example is a *120 km/h speed limit* display on a German Autobahn. The model thinks it is a *Stop* sign with a certainty of a 100%. The second prediction is the correct class, but the model does not even consider it with 1%. This might be caused by the yellow characters, as they appear very bright (white) in the preprocessed image. Additionally the inner background of the sign is dark and not white as usual.
+This last example is a *120 km/h speed limit* display on a German Autobahn. The model thinks it is a *Stop* sign with a certainty of a 100%. The second prediction is the correct class, but the model does not even consider it with 1%. This might be caused by the yellow characters, as they appear very bright (white) in the preprocessed image. Additionally, the inner background of the sign is dark and not white as usual.
 
 
 ##### 2.2 Summary of the Performance on New Images
