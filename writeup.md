@@ -1,6 +1,6 @@
 # **Traffic Sign Recognition**
 
-This is the second project I am doing as part of Udacity's Self-Driving-Car Nanodegree. After learning the theoretical concepts of *neural networks* and *deep learning* I started exploring [TensorFlow](https://www.tensorflow.org/). Following that path I used the newly gained knowledge to build a *deep neural network* in order to recognize 43 different German traffic signs. Utilizing different preprocessing and data augmentation techniques my final model got an accuracy of **98.7%** on the validation set and an accuracy of **96.0%** on the test set. See below for more detail :)
+This is the second project I am doing as part of Udacity's Self-Driving-Car Nanodegree. After learning the theoretical concepts of *neural networks* and *deep learning*, I started exploring [TensorFlow](https://www.tensorflow.org/). Following that path, I used the newly gained knowledge to build up a *deep neural network* in order to recognize 43 different German traffic signs. Utilizing different preprocessing and data augmentation techniques my final model got an accuracy of **98.7%** on the validation set and an accuracy of **96.0%** on the test set. See below for more details :)
 
 
 **The goals / steps of this project are the following:**
@@ -34,7 +34,7 @@ You're reading it! Following below I will consider the [rubric points](https://r
 
 #### 2. Project Files
 
-You can find all project files in this [Github Repository](https://github.com/thoomi/traffic-sign-classifier) and if you're looking specifically for the projects code, [here is a link to the implementation](https://github.com/thoomi/traffic-sign-classifier/blob/master/Traffic_Sign_Classifier.ipynb) as IPython notebook.
+You can find all project files in this [Github Repository](https://github.com/thoomi/traffic-sign-classifier). If you're looking specifically for the projects code, [here is a link to the implementation](https://github.com/thoomi/traffic-sign-classifier/blob/master/Traffic_Sign_Classifier.ipynb) as IPython notebook.
 
 
 ---
@@ -160,15 +160,14 @@ The code for calculating the accuracy of the model is located in the ninth cell 
 
 I started off with a standard [LeNet5 architecture][paper01] and tried to tune the hyperparameters from there. First with only grayscaling the images and after that I tried various input normalization techniques which gave me a about 1% higher accuracy. The further equalization of the images histogram, in order to decouple the model from brightness effects, added another 1-2% accuracy on the validation set.  
 
-After playing a lot with the hyperparameters and not getting results above 95%, I decided to increase the convolution layer sizes and to connect each convolutions output to a big fully connected layer. Finally i got results above 97%. To prevent the model from overfitting caused by the big last layer, I added a [dropout layer][paper04] with a keep probability of 50%.
+After testing the hyperparameters in different ways and not getting results above 95%, I decided to increase the convolution layer sizes and to connect each convolutions output to a big fully connected layer. Finally i got results above 97%. To prevent the model from overfitting caused by the big last layer, I added a [dropout layer][paper04] with a keep probability of 50%.
 
-My final model results were:
+My final model results:
 * Validation set accuracy of **98.7%**
 * Test set accuracy of **96.0%**
 
 
-I kept track of the process in order to help me finding good parameters and not
-trying everything twice. Here is the log book of my progress torwards the final model:
+I kept track of the process in order to help finding good parameters instead of trying everything twice. Here is the log book of my progress torwards the final model:
 
 
 16.02.2017  
@@ -250,9 +249,9 @@ Here are five German traffic signs I found online while browsing through Google 
 ![Example 1][example_image4]
 ![Example 1][example_image5]
 
-* The first image is a sign painted on the street. Because of that it has quite a perspective distortion and might be difficult to classify.
+* The first image is a sign painted on the street. Therefore it has quite a perspective distortion and might be difficult to classify.
 
-* The second image is a different version of the German 30 km/h speed limit sign. I wanted to see if the network is able co classify it correctly, but I guess due to the additional characters on the sign this might be hard.
+* The second image is a different version of the German 30 km/h speed limit sign. I wanted to see, if the network is able to classify it correctly. I guess due to the additional characters on the sign this might be hard classify.
 
 * The third image contains a yield sign partly overlapped by a tree. The overlap could influence the classification probability and the model might not be as certain.
 
@@ -281,11 +280,11 @@ The first image is actually a *Children crossing* sign but my trained model clas
 
 ![Prediction 2][prediction_image2]
 
-As this second sign belongs to a class on which the model was not explicitly trained the false prediction is not a big surprise. But it is very similar to a standard *30 km/h limit* sign and I had some hope it could classify it correct. As the bar chart indicates it got the general speed limit type right, but classified it as an *50 km/h limit* sign.
+Considering that this second sign belongs to a class on which the model was not explicitly trained, the false prediction is not a big surprise. But it is very similar to a standard *30 km/h limit* sign and I had some hope it could classify it correctly. As the bar chart indicates it got the general speed limit type right, but classified it as an *50 km/h limit* sign.
 
 ![Prediction 3][prediction_image3]
 
-With this third example prediction, the model got it right. Although the the traffic sign is partly overlapped by a tree it got a certainty of a 100% on the correct class.
+With this third example prediction, the model got it right. Although the traffic sign is partly overlapped by a tree, it got a certainty of a 100% on the correct class.
 
 ![Prediction 4][prediction_image4]
 
@@ -293,17 +292,17 @@ The fourth image was also classified correctly. This wasn't a particularly hard 
 
 ![Prediction 5][prediction_image5]
 
-This last example image is consists of a *120 km/h speed limit* display on a German Autobahn. The model thinks it is a *Stop* sign with a certainty of a 100%. The second prediction is the correct class but the model does not even consider it with 1%. This might be caused by the yellow characters, as they appear very bright (white) in the preprocessed image. Additionally the inner background of the sign is dark and not white as usual.
+This last example is a *120 km/h speed limit* display on a German Autobahn. The model thinks it is a *Stop* sign with a certainty of a 100%. The second prediction is the correct class, but the model does not even consider it with 1%. This might be caused by the yellow characters, as they appear very bright (white) in the preprocessed image. Additionally the inner background of the sign is dark and not white as usual.
 
 
 ##### 2.2 Summary of the Performance on New Images
 
-The model has its Problems given very distorted images and might be overfitted in some way because it is predicting 100% certainty on wrong images. A good generalized model should distribute the probabilities more even. However given *good* example images with small distortions or small overlaps it performs very well.
+The model has its problems given very distorted images and might be overfitted in some way because it is predicting 100% certainty on wrong images. A good generalized model should distribute the probabilities more even. However given *good* example images with small distortions or small overlaps it performs very well.
 
 
 ##### 2.3 Accuracy on all example images
 
-The model was able to correctly guess 15 of the 18 traffic signs, which gives an accuracy of **83.33%**. This compares to the accuracy on the test set of 96.0%. The difference is caused by using some really hard problems for the classifier like the 120 km/h speed limit display or the highly distorted children crossing sign. But still okay as the model was not explicitly trained on them.
+The model was able to guess 15 of the 18 traffic signs correctly, which gives an accuracy of **83.33%**. Compared to the accuracy on the test set of 96.0%. This difference is caused by using some really hard problems for the classifier like the 120 km/h speed limit display or the highly distorted children crossing sign. All in all still okay because the model was not explicitly trained on them.
 
 ---
 

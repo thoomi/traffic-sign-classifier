@@ -3,7 +3,7 @@
 
 Overview
 ---
-This is the second project I am doing as part of Udacity's Self-Driving-Car Nanodegree. After learning the theoretical concepts of *neural networks* and *deep learning* I started exploring [TensorFlow](https://www.tensorflow.org/). Following that path I used the newly gained knowledge to build a *deep neural network* in order to recognize 43 different German traffic signs. Utilizing different preprocessing and data augmentation techniques my final model got an accuracy of **98.7%** on the validation set and an accuracy of **96.0%** on the test set. See below for more detail :)
+This is the second project I am doing as part of Udacity's Self-Driving-Car Nanodegree. After learning the theoretical concepts of *neural networks* and *deep learning*, I started exploring [TensorFlow](https://www.tensorflow.org/). Following that path, I used the newly gained knowledge to build up a *deep neural network* in order to recognize 43 different German traffic signs. Utilizing different preprocessing and data augmentation techniques my final model got an accuracy of **98.7%** on the validation set and an accuracy of **96.0%** on the test set. See below for more details :)
 
 ### Implementation
 The final model architecture of my solution looks like:
