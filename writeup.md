@@ -75,7 +75,7 @@ Below is a visualization of one example for each individual class. As we can see
 
 #### 1. Preprocessing
 
-The code for this step is contained in the fourth code cell of the IPython notebook.
+The code for this step is contained in the fourth & seventh code cell of the IPython notebook.
 
 As a first step, I decided to convert the images to grayscale. As Sermanet & LeCun show in their [paper][paper02], the color makes almost no difference on the models accuracy because of the similar colors and shapes between the traffic signs. A positive side effect of this is the reduced computation cost.
 
@@ -116,11 +116,11 @@ The new image per class distribution looks like:
 
 #### 3. Model Architecture
 
-The code for my final model is located in the sixth cell of the IPython notebook.
+The code for my final model is located in the eighth cell of the IPython notebook.
 
 My final model consisted of the following layers and is highly inspired by the Sermanet & LeCun model:
 
-![Transformation examples][image8]
+![Model scheme][image8]
 
 And here is a table with more detail:
 
@@ -144,7 +144,7 @@ And here is a table with more detail:
 
 #### 4. Model Training
 
-The code for training the model is located in the seventh cell of the IPython notebook.
+The code for training the model is located in the ninth cell of the IPython notebook.
 
 To train the model, I used the **Adam optimizer** and the following hyperparameters:
 
@@ -156,7 +156,7 @@ To train the model, I used the **Adam optimizer** and the following hyperparamet
 
 #### 5. Solution Design
 
-The code for calculating the accuracy of the model is located in the seventh cell of the IPython notebook.
+The code for calculating the accuracy of the model is located in the ninth cell of the IPython notebook.
 
 I started off with a standard [LeNet5 architecture][paper01] and tried to tune the hyperparameters from there. First with only grayscaling the images and after that I tried various input normalization techniques which gave me a about 1% higher accuracy. The further equalization of the images histogram, in order to decouple the model from brightness effects, added another 1-2% accuracy on the validation set.  
 
@@ -263,7 +263,7 @@ Here are five German traffic signs I found online while browsing through Google 
 
 #### 2. Performance on New Images & Model Certainty
 
-The code for making predictions on my final model is located in the tenth cell of the IPython notebook.
+The code for making predictions on my final model is located in the eleventh cell of the IPython notebook.
 
 ##### 2.1 Analysis of the Performance on New Images
 
