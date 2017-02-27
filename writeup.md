@@ -151,9 +151,9 @@ To train the model, i used the **Adam optimizer** and the following hyperparamet
 
 The code for calculating the accuracy of the model is located in the seventh cell of the Ipython notebook.
 
-I started of with a standard LeNet5 architecture and tried to tune the hyperparameters from there. First with only grayscaling the images and after that I tried various input normalization techniques which gave me a about 1% higher accuracy. The further equalization of the images histogram, to decouple the model from brightness effects, added another 1-2 % accuracy on the validation set.  
+I started of with a standard LeNet5 architecture and tried to tune the hyperparameters from there. First with only grayscaling the images and after that I tried various input normalization techniques which gave me a about 1% higher accuracy. The further equalization of the images histogram, in order to decouple the model from brightness effects, added another 1-2 % accuracy on the validation set.  
 
-After playing a lot with the hyperparameters and not getting results above 95% I decided to increase the convolution layer sizes and to connect the convolution outputs of each layer to a big fully connected layer. Finally i got results above 97 %. To prevent the model from over fitting because of this big last layer, I added a dropout layer with a keep probability of 50 %.
+After playing a lot with the hyperparameters and not getting results above 95% I decided to increase the convolution layer sizes and to connect the convolution outputs of each layer to a big fully connected layer. Finally i got results above 97 %. To prevent the model from overfitting because of this big last layer, I added a dropout layer with a keep probability of 50 %.
 
 My final model results were:
 * Validation set accuracy of **98.6%**
@@ -229,56 +229,63 @@ trying everything twice. Here is the log book of my progress torwards the final 
 
 #### 1. Acquiring New Images
 
-Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+Here are five German traffic signs that I found while browsing through google street view in Berlin:
 
-The submission includes five new German Traffic signs found on the web, and the images are visualized. Discussion is made as to any particular qualities of the images or traffic signs in the images that may be of interest, such as whether they would be difficult for the model to classify.
+[example_image1]: ./examples/example1.png "Example 1"
+[example_image2]: ./examples/example2.png "Example 2"
+[example_image3]: ./examples/example3.png "Example 3"
+[example_image4]: ./examples/example4.png "Example 4"
+[example_image5]: ./examples/example5.png "Example 5"
 
-Here are five German traffic signs that I found on the web:
+![Example 1][example_image1]
+![Example 1][example_image2]
+![Example 1][example_image3]
+![Example 1][example_image4]
+![Example 1][example_image5]
 
-![alt text][image4] ![alt text][image5] ![alt text][image6]
-![alt text][image7] ![alt text][image8]
+* The first image is a sign painted on the street and because of that it has quite a perspective distortion and might be difficult to classify.
 
-The first image might be difficult to classify because ...
+* The second image is different version of the German 30 km/h speed limit sign. I wanted to see if the network is able co classify it correctly, but I guess due to the additional characters on the sign, this might be hard.
 
-#### 2. Performance on New Images
+* The third image contains a yield sign partly overlapped by a tree. The classification probability influenced and the model might be not as certain.
 
-Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. Identify where in your code predictions were made. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail
-as described in the "Stand Out Suggestions" part of the rubric).
+* The fourth image is pretty standard and the model should classify it with  high certainty.
 
-The submission documents the performance of the model when tested on the captured images. The performance on the new images is compared to the accuracy results of the test set.
-
-The code for making predictions on my final model is located in the tenth cell of the Ipython notebook.
-
-Here are the results of the prediction:
-
-| Image			        |     Prediction	        					|
-|:---------------------:|:---------------------------------------------:|
-| Stop Sign      		| Stop sign   									|
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+* The fifth image is a 120 km/h speed limit display. The colors are quite different to the original speed limit sign and I guess the model will have problems classifying it correctly. Mainly because of the black background and the yellow characters.
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+#### 2. Performance on New Images & Model Certainty
 
-#### 3. Model Certainty - Softmax Probabilities
+The code for making predictions on my final model is located in the tenth cell of the IPython notebook.
 
-The top five softmax probabilities of the predictions on the captured images are outputted. The submission discusses how certain or uncertain the model is of its predictions.
-
-Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction and identify where in your code softmax probabilities were outputted. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
-
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
-
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	        					|
-|:---------------------:|:---------------------------------------------:|
-| .60         			| Stop sign   									|
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+[prediction_image1]: ./examples/prediction1.png "Prediction 1"
+[prediction_image2]: ./examples/prediction2.png "Prediction 2"
+[prediction_image3]: ./examples/prediction3.png "Prediction 3"
+[prediction_image4]: ./examples/prediction4.png "Prediction 4"
+[prediction_image5]: ./examples/prediction5.png "Prediction 5"
 
 
-For the second image ...
+![Prediction 1][prediction_image1]
+
+The first image is actually a *Children crossing* sign but my trained model classified it as an *Beware of ice/snow* sign. This is obviously a wrong prediction and in my opinion caused by the perspective distortion. Additionally it is surprising the model has a certainty of a 100% on the wrong sign. I guess this might be a indicator for an overfitted network.
+
+
+![Prediction 2][prediction_image2]
+
+As this second sign belongs to a class on which the model was not explicitly trained the false prediction is not a big surprise. But it is very similar to a standard *30 km/h limit* sign and i had some hope it could classify it correct. As the bar chart indicates it got the general speed limit type right, but classified it as an *50 km/h limit* sign. As the second prediction for this image is the correct *30 km/h limit* sign but the network has a 100% certainty on the *50 km/h limit* sign, I guess the network could be overfitted. Maybe the certainty should be more distributed on this particular image.
+
+![Prediction 3][prediction_image3]
+
+With this third example prediction the model got it right. Although the the traffic sign is partly overlapped by a tree it got a certainty of a 100% on the correct class.
+
+![Prediction 4][prediction_image4]
+
+The fourth image also was classified correctly. This wasn't a particularly hard image and as there is no perspective distortion and the sign is fully visible we got a certainty of a 100% on the correct class.
+
+![Prediction 5][prediction_image5]
+
+This last example image is consists of a *120 km/h speed limit* display on a German Autobahn. The model thinks it is a *stop* sign with a certainty of a 100%. The second prediction is the correct class but the model does not even consider it with 1%. This might be caused by the yellow characters, as they appear very bright (white) in the preprocessed image. Additionally the inner background of the sign is dark and not white as usual.
+
+##### Accuracy on all example images
+
+The model was able to correctly guess 15 of the 18 traffic signs, which gives an accuracy of **83.33%**. This compares to the accuracy on the test set of 96.0%. The difference is caused by using some really hard problems for the classifier like the 120 km/h speed limit display or the highly distorted children crossing sign. But still okay as the model was not explicitly trained on them.
