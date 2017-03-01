@@ -1,7 +1,7 @@
 """P2 - Traffic Sign Classifier"""
-import cv2
 import numpy as np
 import pickle
+import preprocessor
 from sklearn.utils import shuffle
 import tensorflow as tf
 from tensorflow.contrib.layers import flatten
@@ -30,37 +30,10 @@ mean = np.mean(X_train)
 std = np.std(X_train)
 
 
-def center_normalize(data, mean, std):
-    """Center normalize images"""
-    data = data.astype('float32')
-    data = (data / 255) - 0.5
-    return data
-
-
-def grayscale(data):
-    """Grayscale images"""
-    imgs = np.ndarray((data.shape[0], 32, 32, 1), dtype=np.uint8)
-
-    for i, img in enumerate(data):
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        img = cv2.equalizeHist(img)
-        img = np.expand_dims(img, axis=2)
-        imgs[i] = img
-
-    return imgs
-
-
-def preprocess(data):
-    """Convert to grayscale, histogram equalize, and expand dims"""
-    imgs = grayscale(data)
-    imgs = center_normalize(imgs, mean, std)
-    return imgs
-
-
 # preprocess images
-X_train_preprocessed = preprocess(X_train)
-X_valid_preprocessed = preprocess(X_valid)
-X_test_preprocessed = preprocess(X_test)
+X_train_preprocessed = preprocessor.preprocess(X_train)
+X_valid_preprocessed = preprocessor.preprocess(X_valid)
+X_test_preprocessed = preprocessor.preprocess(X_test)
 
 # Hyperparameters
 epochs = 50
@@ -140,7 +113,6 @@ def evaluate(X_data, y_data):
     return total_accuracy / num_examples
 
 
-# Start the tensorflow session and run the model
 # Start the tensorflow session and run the model
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
