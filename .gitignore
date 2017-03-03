@@ -1,7 +1,10 @@
-data
-.ipynb_checkpoints
+data/
+models/
+logs/
+
+__pycache__/
+.ipynb_checkpoints/
+
 *.h5
-models
 *.swp
 *.p
-__pycache__/

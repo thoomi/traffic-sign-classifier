@@ -7,6 +7,7 @@ from keras.layers import Input, merge
 from keras.layers.core import Dense, Activation, Flatten, Dropout
 from keras.layers.convolutional import Convolution2D
 from keras.layers.pooling import MaxPooling2D
+from keras.callbacks import TensorBoard
 from sklearn.preprocessing import LabelBinarizer
 
 tf.python.control_flow_ops = tf
@@ -62,13 +63,15 @@ model.summary()
 X_train_preprocessed = preprocessor.preprocess(X_train)
 X_valid_preprocessed = preprocessor.preprocess(X_valid)
 
+# Create logging setup
+logs = TensorBoard(histogram_freq=5)
 
 label_binarizer = LabelBinarizer()
 y_train_one_hot = label_binarizer.fit_transform(y_train)
 y_valid_one_hot = label_binarizer.fit_transform(y_valid)
 
 model.compile('adam', 'categorical_crossentropy', ['accuracy'])
-history = model.fit(X_train_preprocessed, y_train_one_hot, nb_epoch=2, validation_data=(X_valid_preprocessed, y_valid_one_hot))
+history = model.fit(X_train_preprocessed, y_train_one_hot, nb_epoch=5, validation_data=(X_valid_preprocessed, y_valid_one_hot), callbacks=[logs])
 
 
 # Evaluate the models performance on test set
