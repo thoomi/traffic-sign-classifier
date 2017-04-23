@@ -7,6 +7,7 @@ This is the second project I am doing as part of Udacity's Self-Driving-Car Nano
 
 ### Implementation
 The final model architecture of my solution looks like:
+
 [image8]: ./images/model_scheme.png "Model scheme"
 
 ![Transformation examples][image8]
